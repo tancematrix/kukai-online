@@ -16,6 +16,7 @@
 <label for="haiku_text">句</label>
 <input type="text" name="haiku_text" value="{% if ku %}{{ku}}{% endif %}" required><br>
 <p>俳号: {{user}}</p>
+<input type="hidden" name="ku_id" value="{% if ku %}{{ku.id}}{% else %}-1{% endif %}">
 <input type="submit" value="投句" class="button">
 </form>
 {% endblock %}

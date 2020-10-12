@@ -79,13 +79,17 @@ def save_haiku(request, unza_id):
     unza = get_object_or_404(Unza, pk=unza_id)
     try:
         haiku_text = request.POST["haiku_text"]
-        # author = request.POST["author"]
+        ku_id = int(request.POST["ku_id"])
     except (KeyError):
         return render(request, 'kukai/senku.html', {
             'error_message': "投句エラー",
         })
     else:
-        ku = Ku(author=request.user, unza=unza, haiku_text=haiku_text)
+        if ku_id == -1:
+            ku = Ku(author=request.user, unza=unza, haiku_text=haiku_text)
+        else:
+            ku = get_object_or_404(Ku, pk=ku_id)
+            ku.haiku_text = haiku_text
         ku.save()
     return HttpResponseRedirect(reverse('kukai:detail', args=(unza_id,)))
 
