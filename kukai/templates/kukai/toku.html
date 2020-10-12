@@ -14,7 +14,7 @@
 <form action="{% url 'kukai:save_haiku' unza.id %}" method="post">
 {% csrf_token %}
 <label for="haiku_text">句</label>
-<input type="text" name="haiku_text" value="{{ku}}" required><br>
+<input type="text" name="haiku_text" value="{% if ku %}{{ku}}{% endif %}" required><br>
 <p>俳号: {{user}}</p>
 <input type="submit" value="投句" class="button">
 </form>
