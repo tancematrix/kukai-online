@@ -71,7 +71,7 @@ def create(request):
 @login_required
 def toku(request, unza_id):
     unza = get_object_or_404(Unza, pk=unza_id)
-    return render(request, "kukai/toku.html", {"unza":unza, "user": request.user})
+    return render(request, "kukai/toku.html", {"unza":unza, "user": request.user, "ku":None})
 
 
 @require_POST
@@ -93,7 +93,8 @@ def save_haiku(request, unza_id):
 @login_required
 def edit_haiku(request, unza_id, ku_id):
     ku = get_object_or_404(Ku, pk=ku_id)
-    return render(request, "kukai/toku.html", {"ku": ku})
+    unza = get_object_or_404(Unza, pk=unza_id)
+    return render(request, "kukai/toku.html", {"unza":unza, "user": request.user, "ku":ku})
 
 @require_POST
 def delete_haiku(request, unza_id, ku_id):
