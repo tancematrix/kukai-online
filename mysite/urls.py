@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-
+from django.views import generic
 urlpatterns = [
     path('kukai/', include('kukai.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
-    path('', include('kukai.urls')),
+    path('', generic.RedirectView.as_view(pattern_name='kukai:index')),
 ]
