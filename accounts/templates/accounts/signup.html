@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}アカウント作成{% endblock %}
+{% block content %}
+<h1>新規登録</h1>
+<section class="common-form">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="button">登録！</button>
+    </form>
+</section>
+<ul>
+    <li>既に他の人が使っている俳号は使用できません。重複しそうな俳号の場合、名字をつけるなど工夫をお願いします。</li>
+    <li>俳号はあとで変更することができます。</li>
+    <li>俳号はログイン時に必要です。</li>
+    <li>投句や選句の時にもこの俳号が使用されます。</li>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+{% block title %}{{ unza.unza_title }}{% endblock %}
+{% block content %}
+
+<h1>{{ unza.unza_title }}</h1>
+
+{% if unza.info %}<p>{{ unza.info | linebreaksbr }}</p>{% endif %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if messages %}
+{% for message in messages %}
+<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+{% endfor %}
+{% endif %}
+
+
+{% if unza.senku_closed %}
+    <p>投句・選句が終了しました。</p>
+            <form action="{% url 'kukai:senku_close' unza.id %}" method="post">
+                {% csrf_token %}
+            <input type="submit" value="選句再開-これはあとで消す。view内の関数も変更する" onclick="return confirm('全ての参加者の選句を終了して、結果を表示します。\nこの操作は取り消せません。\nよろしいでしょうか？');" class="button">
+            </form>
+    <div class="cp_tab">
+        <input type="radio" name="cp_tab" id="tab1_1" aria-controls="first_tab01" checked>
+        <label for="tab1_1">互選</label>
+        <input type="radio" name="cp_tab" id="tab1_2" aria-controls="second_tab01">
+        <label for="tab1_2">点盛り</label>
+        <div class="cp_tabpanels">
+            <div id="first_tab01" class="cp_tabpanel">
+            <h2>互選</h2>
+            {% for selector, ku_list in sen_dict.items %}
+                <h3>{{ selector }}選</h3>
+                <div class="tategaki">
+                    <table class="ku_table">
+                    {% for ku in ku_list %}
+                        <tr>
+                            <td class="ku">{{ ku }}</td><td>{{ ku.author }}</td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+            {% endfor %}
+            </div>
+            <div id="second_tab01" class="cp_tabpanel">
+            <h2>点盛り</h2>
+            <div class="tategaki">
+            <table class="ku_table">
+                {% for ten_dict in tenmori_list %}
+                    <tr>
+                        <td>{{ ten_dict.selectors_num_kansuji }}</td><td class="ku">{{ ten_dict.ku }}</td><td>{% if ten_dict.selectors_num %}{{ ten_dict.ku.author }}{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            </div>
+            </div>
+        </div>
+    </div>
+
+{%else%}
+
+    {% if unza.toku_closed %}
+        <form action="{% url 'kukai:senku' unza.id %}" method="post">
+            {% csrf_token %}
+        <input type="submit" value="選句" class="button">
+        </form>
+        {% if user == unza.author %}
+            <form action="{% url 'kukai:toku_close' unza.id %}" method="post">
+                {% csrf_token %}
+            <input type="submit" value="投句を再開" onclick="return confirm('全ての参加者の選句を中断して、投句を再開可能にします。\nよろしいでしょうか？');" class="button">
+            </form>
+            <form action="{% url 'kukai:senku_close' unza.id %}" method="post">
+                {% csrf_token %}
+            <input type="submit" value="選句締切" onclick="return confirm('全ての参加者の選句を終了して、結果を表示します。\nこの操作は取り消せません。\nよろしいでしょうか？');" class="button">
+            </form>
+        {% endif %}
+    {% else %}
+    <form action="{% url 'kukai:toku' unza.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="投句" class="button">
+        </form>
+        {% if user == unza.author %}
+        <form action="{% url 'kukai:toku_close' unza.id %}" method="post">
+            {% csrf_token %}
+        <input type="submit" value="投句締め切り" onclick="return confirm('全ての参加者の投句を締め切って、選句を始めます。\n句の編集や削除はできなくなりますが、締め切ってよろしいでしょうか？');" class="button">
+        </form>
+        {% endif %}
+        {% if ku_list %}
+            <h3>投句済み一覧</h3>
+            <table class="ku_table">
+                {% for ku in ku_list %}
+                <tr>
+                    <td>{{ku}}</td>
+                    <td>
+                    <form action="{% url 'kukai:edit_haiku' unza.id ku.id %}" method="post">
+                        {% csrf_token %}
+                        <input name="edit{{ forloop.counter }}" type="submit" value="編集">
+                    </form>
+                    </td>
+                    <td>
+                    <form action="{% url 'kukai:delete_haiku' unza.id ku.id %}" method="post">
+                        {% csrf_token %}
+                        <input name="delete{{ forloop.counter }}" type="submit" value="削除" onclick="return confirm('本当に削除しますか？');"><br class="button">
+                    </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        {% endif %}
+        
+    {% endif %}
+
+{% endif %}
+
+{% endblock %}

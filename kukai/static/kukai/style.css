@@ -1,0 +1,188 @@
+
+a{
+	color: black;
+	text-decoration: none;
+  }
+  
+a:hover{
+	color : #aaaaaa;
+	text-decoration: underline;
+}
+
+.header__flex {
+    display: flex;
+    align-items: center;
+}
+
+
+
+.header__flex nav { 
+    margin-right: auto;
+    display: flex;
+    margin-left: 5%;
+}
+
+
+nav.site-top, nav.local-top {
+    margin-right: 10px;
+}
+
+
+.header__flex > .header-accounts {
+	font-size: 0.9em;
+	border:double #999999;
+	border-width:0 0 0 6px;
+	margin-right: 5%;
+	margin-top: 5px;
+	margin-bottom: 10px;
+	padding: 0px;
+}
+
+body {
+    background-color:#dddddd;
+}
+
+.content {
+	border-radius : 10px;          /* 角丸       */
+	box-shadow    : 1px 1px 3px #666666 inset;  /* 影の設定 */
+    background-color :#ffffff;
+    margin-left: auto;
+	margin-right: auto;
+	padding-top: 20px;
+	padding-bottom: 20px;
+    max-width: 80%;
+    padding-right: 5%;
+    padding-left: 5%;
+    min-height: 100%;
+    height: auto;
+}
+
+.tategaki{
+    writing-mode: vertical-rl;
+    -ms-writing-mode: tb-rl;
+    -webkit-writing-mode:vertical-rl;
+    font-family: "serif", "YuGothic","Yu Gothic","Meiryo","ヒラギノ角ゴ","sans-serif";
+}
+
+.ku_table td{
+    padding: 1.5em 0.25em;
+    -moz-text-align-last: justify;
+    text-align-last: justify;
+    text-justify:inter-ideograph;
+}
+
+.button, .a-button {
+    display       : inline-block;
+    border-radius : 5%;          /* 角丸       */
+    font-size     : 1em;        /* 文字サイズ */
+    text-align    : center;      /* 文字位置   */
+    cursor        : pointer;     /* カーソル   */
+    padding       : 5px 5px;   /* 余白       */
+    margin        : 5px 5px;   /* 余白       */
+    background    : #ffffff;     /* 背景色     */
+    color         : #000000;     /* 文字色     */
+    line-height   : 1em;         /* 1行の高さ  */
+    box-shadow    : 1px 1px 3px #666666;  /* 影の設定 */
+}
+
+.a-button {
+	text-decoration: none;
+	padding       : 12px 12px;   /* 余白       */
+}
+
+
+.button:hover {
+	box-shadow    : none;        /* カーソル時の影消去 */
+}
+
+.cp_tab *, .cp_tab *:before, .cp_tab *:after {
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+.cp_tab {
+    margin: 1em auto;
+}
+.cp_tab > input[type='radio'] {
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    outline: none;
+    background: none;
+    -webkit-appearance: none;
+            appearance: none;
+    display: none;
+}
+.cp_tab .cp_tabpanel {
+    display: none;
+}
+.cp_tab > input:first-child:checked ~ .cp_tabpanels > .cp_tabpanel:first-child,
+.cp_tab > input:nth-child(3):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(2),
+.cp_tab > input:nth-child(5):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(3),
+.cp_tab > input:nth-child(7):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(4),
+.cp_tab > input:nth-child(9):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(5),
+.cp_tab > input:nth-child(11):checked ~ .cp_tabpanels > .cp_tabpanel:nth-child(6) {
+    display: block;
+}
+.cp_tab > label {
+    position: relative;
+    display: inline-block;
+    padding: 15px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-bottom: 0;
+}
+.cp_tab > label:hover,
+.cp_tab > input:focus + label {
+    color: #0066cc;
+}
+.cp_tab > input:checked + label {
+    margin-bottom: -1px;
+    border-color: #cccccc;
+    border-bottom: 1px solid #ffffff;/*背景色と同じ*/
+    border-radius: 6px 6px 0 0;
+}
+.cp_tab .cp_tabpanel {
+    padding: 0.5em 1em;
+    border-top: 1px solid #cccccc;
+}
+@media (max-width: 480px) {
+    .cp_tab {
+    width: 100%;
+    font-size: 0.8em;
+    }
+    .cp_tab label {
+    padding: 0.5em;
+    }
+}
+
+ul.kukai-list {
+	padding:0.5em;
+	list-style-type:none;
+}
+ul.kukai-list li {
+	position:relative;
+	padding: 0em 0.3em 0.3em 1.3em;
+}
+ul.kukai-list li:before {
+	position:absolute;
+	content:'';
+	top: 0.5em;
+	left: 0.2em;
+	height:0;
+	width:0;
+	border-style: solid;
+	border-width: 4px 0 4px 5px;
+	border-color: transparent transparent transparent rgb(66, 66, 66);
+}
+
+ul.username {
+	list-style-type:none;
+	padding-left: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+ul.user-option {
+	list-style-type: "> ";
+	text-decoration: underline;
+}

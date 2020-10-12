@@ -1,0 +1,21 @@
+
+
+{% extends "base.html" %}
+{% block title %}情報変更{% endblock %}
+
+{% block content %}
+<h1>俳号変更</h1>
+<form  action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input class="button" type="submit" value="変更">
+</form>
+<a href="{% url 'accounts:profile' %}" class="a-button">プロフィールに戻る</a>
+<ul>
+    <li>既に他の人が使っている俳号は使用できません。重複しそうな俳号の場合、名字をつけるなど工夫をお願いします。</li>
+    <li>俳号はあとで変更することができます。</li>
+    <li>俳号はログイン時に必要です。</li>
+    <li>投句や選句の時にもこの俳号が使用されます。</li>
+</ul>
+
+{% endblock %}

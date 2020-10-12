@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Sawarabi+Mincho" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'kukai/style.css' %}">
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'kukai/icon/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'kukai/icon/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'kukai/icon/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'kukai/icon/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'kukai/icon/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'kukai/icon/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'kukai/icon/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'kukai/icon/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'kukai/icon/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192"  href="{% static 'kukai/icon/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'kukai/icon/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'kukai/icon/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'kukai/icon/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'kukai/icon/manifest.json' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <title>{% if request.path != '/' %}{% block title %}{% endblock %} | {% endif %}オンライン句会</title>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="header__flex">
+        <nav>
+            <div class="site-top"><a href="{% url 'kukai:index' %}" class="a-button">TOP</a></div>
+            {% block localtop %}{% endblock %}
+        </nav>
+        <div class="header-accounts">
+        <ul class="username">
+            {% if user.is_authenticated %}
+            <li>{{ user.username }} さん
+                <ul class="user-option">
+                    <li><a href="{% url 'accounts:profile' %}" class="profile">プロフィール</a></li>
+                    <li><a href="{% url 'logout' %}" class="logout">ログアウト</a></li>
+                </ul>
+            </li>
+            {% else %}
+            <li>ゲスト さん<ul class="user-option">
+            <li><a href="{% url 'accounts:signup' %}" class="signup">新規登録</a></li>
+            <li><a href="{% url 'login' %}" class="login">ログイン</a></li>
+            </ul>
+            </li>
+            {% endif %}
+        </ul>
+        </div>
+        
+    </div>
+    </header>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>

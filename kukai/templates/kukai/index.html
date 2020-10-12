@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}トップ{% endblock %}
+
+{% block content %}
+
+<a href="{% url 'kukai:new'%}"  class="a-button">句会を新規作成</a>
+<h1>作成された句会</h1>
+{% if latest_unza_list %}
+    <ul class="kukai-list">
+    {% for unza in latest_unza_list %}
+        <li><a href="{% url 'kukai:detail' unza.id %}">{{ unza.unza_title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endif %}
+{% endblock %}

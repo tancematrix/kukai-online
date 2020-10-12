@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}選句{% endblock %}
+{% block localtop %}<div class="local-top"><a href="{% url 'kukai:detail' unza.id%}" class="a-button">句会TOP</a></div>{% endblock %}
+
+{% block content %}
+
+<h1>{{ unza.unza_title }}</h1>
+{% if unza.info %}<p>{{ unza.info | linebreaksbr }}</p>{% endif %}
+<h2>選句</h2>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'kukai:save_senku' unza.id %}" method="post">
+{% csrf_token %}
+<div class="tategaki">
+<table>
+    {% for ku in ku_set %}
+    <tr>
+        <td>
+            {% if ku.author_id != user.id %}
+            <input name="choice" type="checkbox" value={{ ku.id }}>
+            {% endif %}
+        </td>
+        <td class="ku">{{ ku.haiku_text }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+
+<input type="submit" value="確定" class="button">
+</form>
+
+{% endblock %}

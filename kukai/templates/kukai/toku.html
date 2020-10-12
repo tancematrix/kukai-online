@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}投句{% endblock %}
+{% block localtop %}<div class="local-top"><a href="{% url 'kukai:detail' unza.id%}"  class="a-button">句会TOP</a></div>{% endblock %}
+
+{% block content %}
+
+
+<h1>{{ unza.unza_title }}</h1>
+{% if unza.info %}<p>{{ unza.info  | linebreaksbr}}</p>{% endif %}
+<h2>投句フォーム</h2>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'kukai:save_haiku' unza.id %}" method="post">
+{% csrf_token %}
+<label for="haiku_text">句</label>
+<input type="text" name="haiku_text" value="{{ku}}" required><br>
+<p>俳号: {{user}}</p>
+<input type="submit" value="投句" class="button">
+</form>
+{% endblock %}

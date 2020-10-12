@@ -1,0 +1,14 @@
+
+
+{% extends 'base.html' %}
+{% block title %}ユーザー情報{% endblock %}
+{% block content %}
+<div class="ui grid stackable">
+    <div class="ui segment">
+        <div class="ui divided bulleted list">
+            <div class="item">俳号：{{user.username}}</div>
+        </div>
+    <a class="button" href="{% url 'accounts:change' %}">俳号変更</a>
+    <a class="button" href="{% url 'password_change' %}">パスワード変更</a>
+</div>
+{% endblock %}
