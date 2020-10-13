@@ -71,6 +71,9 @@ def create(request):
 @login_required
 def toku(request, unza_id):
     unza = get_object_or_404(Unza, pk=unza_id)
+    if unza.toku_closed:
+        messages.error(request, "投句は締め切られました。")
+        return redirect("kukai:detail", pk=unza_id)
     return render(request, "kukai/toku.html", {"unza":unza, "user": request.user, "ku":None})
 
 
@@ -94,11 +97,16 @@ def save_haiku(request, unza_id):
     return HttpResponseRedirect(reverse('kukai:detail', args=(unza_id,)))
 
 
-@login_required
+@require_POST
 def edit_haiku(request, unza_id, ku_id):
     ku = get_object_or_404(Ku, pk=ku_id)
     unza = get_object_or_404(Unza, pk=unza_id)
-    return render(request, "kukai/toku.html", {"unza":unza, "user": request.user, "ku":ku})
+    if ku.unza.id == unza.id and ku.author.id == request.user.id:
+        return render(request, "kukai/toku.html", {"unza":unza, "user": request.user, "ku":ku})
+    else:
+        messages.error(request, "不正な編集です。")
+        return redirect("kukai:detail", pk=unza_id)
+
 
 @require_POST
 def delete_haiku(request, unza_id, ku_id):
@@ -112,7 +120,7 @@ def close_toku(request, unza_id):
     if request.user == unza.author:
         unza.toku_closed = not unza.toku_closed
         unza.save()
-        messages.success(request, '投句を締め切りました。')
+        messages.success(request, '投句を締め切りました。' if unza.toku_closed else "投句を再開しました。")
     else:
         messages.error(request, '投句を締め切ることができるのは句会作成者のみです。')
     return redirect("kukai:detail", pk=unza_id)
@@ -122,6 +130,9 @@ def close_toku(request, unza_id):
 @login_required
 def senku(request, unza_id):
     unza = get_object_or_404(Unza, pk=unza_id)
+    if unza.senku_closed:
+        messages.error(request, "選句は締め切られました。")
+        return redirect("kukai:detail", pk=unza_id)
     user = request.user
     ku_set = unza.ku_set.all().values()
     ku_set = list(ku_set)
