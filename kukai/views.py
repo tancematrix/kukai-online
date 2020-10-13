@@ -6,6 +6,7 @@ from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
+from django.db.models import Q
 
 from .models import Unza, Ku
 from django.utils import timezone
@@ -17,7 +18,8 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_unza_list'
     def get_queryset(self):
         """Return the last five published questions."""
-        return Unza.objects.order_by('-pub_date')[:35]
+        user = self.request.user
+        return Unza.objects.filter(Q(author=user.id) | Q(selectors=user.id)).distinct().order_by('-pub_date')[:35]
 
 
 class DetailView(generic.DetailView):
