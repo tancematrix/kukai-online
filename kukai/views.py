@@ -164,8 +164,7 @@ def save_senku(request, unza_id):
 def close_senku(request, unza_id):
     unza = get_object_or_404(Unza, pk=unza_id)
     if request.user == unza.author:
-        # unza.close_senku()
-        unza.senku_closed = not unza.senku_closed
+        unza.close_senku()
         unza.save()
         messages.success(request, '選句を締め切りました。')
     else:

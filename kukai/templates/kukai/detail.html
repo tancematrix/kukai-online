@@ -18,7 +18,6 @@
     <p>投句・選句が終了しました。</p>
             <form action="{% url 'kukai:senku_close' unza.id %}" method="post">
                 {% csrf_token %}
-            <input type="submit" value="選句再開-これはあとで消す。view内の関数も変更する" onclick="return confirm('全ての参加者の選句を終了して、結果を表示します。\nこの操作は取り消せません。\nよろしいでしょうか？');" class="button">
             </form>
     <div class="cp_tab">
         <input type="radio" name="cp_tab" id="tab1_1" aria-controls="first_tab01" checked>
