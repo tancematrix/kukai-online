@@ -19,8 +19,10 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         """Return the last five published questions."""
         user = self.request.user
-        return Unza.objects.filter(Q(author=user.id) | Q(selectors=user.id)).distinct().order_by('-pub_date')[:35]
-
+        if user.is_authenticated:
+            return Unza.objects.filter(Q(author=user.id) | Q(selectors=user.id)).distinct().order_by('-pub_date')[:35]
+        else:
+            return Unza.objects.none()
 
 class DetailView(generic.DetailView):
     model = Unza
